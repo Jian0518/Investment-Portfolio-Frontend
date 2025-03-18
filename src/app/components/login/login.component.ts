@@ -25,6 +25,7 @@ export class LoginComponent {
       .subscribe(
         (response: any) => {
           localStorage.setItem('token', response.token);
+          this.router.navigate(['/dashboard']);
         },
         (error) => {
           this.error = 'Invalid username or password';

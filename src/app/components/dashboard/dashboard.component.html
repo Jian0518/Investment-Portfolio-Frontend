@@ -1,0 +1,71 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Investment Portfolio Dashboard</h1>
+    <div class="user-actions">
+      <button (click)="addInvestment()" class="action-button">Add Investment</button>
+      <button (click)="generateReport()" class="action-button">Generate Report</button>
+    </div>
+  </header>
+
+  <div class="portfolio-summary">
+    <div class="summary-card">
+      <h3>Total Portfolio Value</h3>
+      <p class="value">${{ portfolioSummary.totalValue | number:'1.0-0' }}</p>
+    </div>
+    <div class="summary-card">
+      <h3>Total Return</h3>
+      <p class="value" [ngClass]="portfolioSummary.totalReturn >= 0 ? 'positive' : 'negative'">
+        ${{ portfolioSummary.totalReturn | number:'1.0-0' }}
+      </p>
+    </div>
+    <div class="summary-card">
+      <h3>Return Percentage</h3>
+      <p class="value" [ngClass]="portfolioSummary.returnPercentage >= 0 ? 'positive' : 'negative'">
+        {{ portfolioSummary.returnPercentage | number:'1.2-2' }}%
+      </p>
+    </div>
+  </div>
+
+  <div class="portfolio-details">
+    <div class="asset-allocation">
+      <h2>Asset Allocation</h2>
+      <div class="allocation-chart">
+        <div *ngFor="let asset of assetAllocation" class="allocation-bar">
+          <div class="bar" [style.width]="asset.percentage + '%'"></div>
+          <div class="label">
+            <span>{{ asset.category }}</span>
+            <span>{{ asset.percentage }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="investments-list">
+      <h2>Current Investments</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Symbol</th>
+            <th>Shares</th>
+            <th>Current Price</th>
+            <th>Total Value</th>
+            <th>Return %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let investment of investments">
+            <td>{{ investment.name }}</td>
+            <td>{{ investment.symbol }}</td>
+            <td>{{ investment.shares }}</td>
+            <td>${{ investment.currentPrice | number:'1.2-2' }}</td>
+            <td>${{ investment.totalValue | number:'1.2-2' }}</td>
+            <td [ngClass]="investment.returnPercentage >= 0 ? 'positive' : 'negative'">
+              {{ investment.returnPercentage | number:'1.2-2' }}%
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
